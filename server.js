@@ -117,3 +117,164 @@ app.get("/api/shorturl/:shorturl", function (req, res) {
 var listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
+
+
+//--------------------------------------------------------------------------------
+// exercise tracker
+//--------------------------------------------------------------------------------
+
+
+
+
+
+// const exerciseSchema = new mongoose.Schema(
+//   {
+//     description: { type: String, required: true },
+//     duration: { type: Number, required: true },
+//     date: { type: String, required: true }
+//   },
+//   {
+//     timestamps: false,
+//     _id: false
+//   }
+// );
+
+// const Exercise = mongoose.model("Exercise", exerciseSchema);
+
+// const userSchema = new mongoose.Schema(
+//   {
+//     username: {
+//       type: String,
+//       required: true,
+//       unique: true,
+//       trim: true,
+//       minlength: 3
+//     },
+//     log: { type: [exerciseSchema], required: false }
+//   },
+//   {
+//     timestamps: false,
+//     versionKey: false
+//   }
+// );
+
+// const User = mongoose.model("User", userSchema);
+
+// app.get("/api/users", (req, res) => {
+//   return User.find().then(users => res.json(users));
+// });
+
+// app.post("/api/users", (req, res) => {
+//   const { username } = req.body;
+
+//   User.findOne({ username }).then(user => {
+//     if (user) return res.json(user);
+//     else {
+//       const newUser = new User({ username });
+
+//       newUser.save().then(() => res.json(newUser));
+//     }
+//   });
+// });
+
+// app.post("/api/users/:_id/exercises", async (req, res) => {
+//   let { description, duration, date } = req.body;
+//   const id = req.params._id;
+
+//   duration = parseInt(duration);
+
+//   if (!date) {
+//     date = new Date();
+//   }
+//   date = new Date(date);
+//   date = date.toDateString();
+
+//   if (id.match(/^[0-9a-fA-F]{24}$/)) {
+//     let updated = await User.findOneAndUpdate(
+//       { _id: id },
+//       {
+//         $push: {
+//           log: {
+//             date,
+//             duration,
+//             description
+//           }
+//         }
+//       }
+//     ).exec();
+
+//     let user = await User.findById(id).exec();
+
+//     return res.json({
+//       _id: user._id,
+//       username: user.username,
+//       date: date,
+//       duration: duration,
+//       description: description
+//     });
+//   }
+// });
+
+// app.get("/api/users/:_id/logs", async (req, res) => {
+//   const id = req.params._id;
+//   let flag = 0
+//   const user = await User.findById(id).exec();
+//   let { _id, username, log } = user;
+//   const count = log.length;
+
+//   let { from, to, limit } = req.query;
+
+//   if (from) {
+//     flag = 1
+//     from = new Date(from);
+//     log = log.filter((exercise) => new Date(exercise.date) >= from);
+//   }
+
+//   if (to) {
+//     to = new Date(to);
+//     log = log.filter((exercise) => new Date(exercise.date) <= to);
+//   }
+
+//   if (limit) {
+//     log = log.slice(0, limit);
+//   }
+
+//   if (flag === 1) {
+//     console.log({
+//       _id,
+//       username,
+//       from: new Date(from).toDateString(),
+//       to: new Date(to).toDateString(),
+//       log,
+//       count
+//     })
+//     return res.json({
+//       _id,
+//       username,
+//       from: new Date(from).toDateString(),
+//       to: new Date(to).toDateString(),
+//       log,
+//       count
+//     })
+//   } else {
+//     console.log({
+//       _id,
+//       username,
+//       log,
+//       count
+//     })
+//     return res.json({
+//       _id,
+//       username,
+//       log,
+//       count
+//     });
+//   }
+
+
+// });
+
+
+// app.get("/api/users/:_id/exercises", (req, res) => {
+//   return User.findById(Object.values(req.body)[0]).then(user => res.json(user));
+// });
